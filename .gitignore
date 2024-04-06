@@ -6,9 +6,12 @@ build/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
+.idea/workspace.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
+.idea/uiDesigner.xml
 .idea/libraries/
+.idea/shelf/**
 *.iws
 *.iml
 *.ipr
