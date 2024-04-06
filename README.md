@@ -13,4 +13,3 @@
 ```
 # TurboDSL
 > A _DSL engine_ to **turbo-charge** your Kotlin development.
-```
