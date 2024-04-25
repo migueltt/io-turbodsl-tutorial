@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024. Project's Author and/or Contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -54,46 +70,49 @@ fun main() {
  */
 object MainKotlin {
     fun main() {
-runBlocking(context = Dispatchers.IO) {
-    // Launch two coroutines with async
-    val job1 = async {
-        // Simulate a long-running task that will calculate some Int value
-        printTest("start job1")
-        delay(1_000L)
-        printTest("finish job1")
-        return@async 100
-    }
-    val job2 = async {
-        // Simulate a long-running task that will calculate some String value
-        printTest("start job2")
-        delay(3_000L)
-        printTest("finish job2")
-        return@async "test"
-    }
-    val job3 = async {
-        // Simulate a long-running task that will calculate some Boolean value
-        printTest("start job3")
-        delay(2_000L)
-        printTest("finish job3")
-        return@async true
-    }
-    // At this point, both job1 and job2 are started an executed
-    printTest("awaiting results")
-    // Wait for both results concurrently (non-blocking)
-    val value1 = job1.await()
-    printTest("job1 results ready")
-    val value2 = job2.await()
-    printTest("job2 results ready")
-    val value3 = job3.await()
-    printTest("job3 results ready")
-    printTest("all results ready - proceeding to final processing")
+        runBlocking(context = Dispatchers.IO) {
+            // Launch two coroutines with async
+            val job1 =
+                async {
+                    // Simulate a long-running task that will calculate some Int value
+                    printTest("start job1")
+                    delay(1_000L)
+                    printTest("finish job1")
+                    return@async 100
+                }
+            val job2 =
+                async {
+                    // Simulate a long-running task that will calculate some String value
+                    printTest("start job2")
+                    delay(3_000L)
+                    printTest("finish job2")
+                    return@async "test"
+                }
+            val job3 =
+                async {
+                    // Simulate a long-running task that will calculate some Boolean value
+                    printTest("start job3")
+                    delay(2_000L)
+                    printTest("finish job3")
+                    return@async true
+                }
+            // At this point, both job1 and job2 are started an executed
+            printTest("awaiting results")
+            // Wait for both results concurrently (non-blocking)
+            val value1 = job1.await()
+            printTest("job1 results ready")
+            val value2 = job2.await()
+            printTest("job2 results ready")
+            val value3 = job3.await()
+            printTest("job3 results ready")
+            printTest("all results ready - proceeding to final processing")
 
-    // Process results
-    // Simulate a long-running task that will process results and return a String value
-    printTest("start job4")
-    delay(2_000L)
-    printTest("finish job4")
-    printTest("Final: $value1 - $value2 - $value3")
-}
+            // Process results
+            // Simulate a long-running task that will process results and return a String value
+            printTest("start job4")
+            delay(2_000L)
+            printTest("finish job4")
+            printTest("Final: $value1 - $value2 - $value3")
+        }
     }
 }
