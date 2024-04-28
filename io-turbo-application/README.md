@@ -1,18 +1,4 @@
-```text
- - ..- .-. -... --- -.. ... .-.. - ..- .-. -... --- -.. ... .-..
-   ___________       ______
-     ___  ___/        __/ /           ________   _____  ___
-     __  /__  __ _,___ / /_   ____     __  __ \ / ___/ /  /
-  ____  // / / // ___// __ \ / __ \ ____  / / / \ \   /  /
-   __  // /_/ // /   / (_/ // (_/ /  __  /_/ /___\ \ /  /___
- _____/ \__,_//_/   /_,___/ \____/ _________//_____//______/
- 
- io.turbodsl
- 
- - ..- .-. -... --- -.. ... .-.. - ..- .-. -... --- -.. ... .-..
-```
-# TurboDSL
-> A _DSL engine_ to **turbo-charge** your Kotlin applications.
+# TurboDSL in a Kotlin application
 
 This project contains samples on how to use `io.turbodsl` on standard applications.
 
