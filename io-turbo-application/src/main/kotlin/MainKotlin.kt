@@ -1,5 +1,5 @@
 /*
- * Copyright 2024. Project's Author and/or Contributors.
+ * Copyright 2024 migueltt and/or Contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ fun main() {
  * ```
  * Total duration may vary depending on the hardware.
  * Ideally, the whole process should take 5000ms, but there always a tiny overhead due to how
- * coroutines are managed internally, plus the additional statements/expressions added.
+ * coroutines are managed internally by Kotlin, plus the additional statements/expressions added.
  */
 object MainKotlin {
     fun main() {

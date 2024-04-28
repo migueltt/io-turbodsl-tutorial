@@ -1,5 +1,5 @@
 /*
- * Copyright 2024. Project's Author and/or Contributors.
+ * Copyright 2024 migueltt and/or Contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,24 +25,26 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     // This will use ~/.m2 local maven repository
-    // mavenLocal()
-    // -------------------------------------------------
-    // This will use GitHubPackages
-     maven {
-         name = "GitHubPackages"
-         url = uri("https://maven.pkg.github.com/migueltt/io-turbodsl")
-         credentials {
-             // username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-             username = "<username>"
-             // https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
-             password = "<key>"
-         }
-     }
+    mavenLocal()
+    /*
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/migueltt/io-turbodsl")
+        credentials {
+            // username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+            username = "<username>"
+            // See https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+            // password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            password = "<token>"
+        }
+    }
+    */
     mavenCentral()
 }
 
 dependencies {
     implementation("io.turbodsl:io-turbodsl-core:+")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
     testImplementation(kotlin("test"))
 }
 
