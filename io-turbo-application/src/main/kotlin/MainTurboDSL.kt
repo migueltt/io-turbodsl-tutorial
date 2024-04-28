@@ -1,5 +1,5 @@
 /*
- * Copyright 2024. Project's Author and/or Contributors.
+ * Copyright 2024 migueltt and/or Contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import kotlinx.coroutines.delay
 
 /** Run [MainTurboDSL.main] 5 times. */
 fun main() {
+    // Enable internal logging to see what's going on
     System.setProperty(LoggerProvider.PROPERTY_LOGGING_LEVEL, "off")
     System.setProperty(LoggerProvider.PROPERTY_LOGGING_INTERNAL, "true")
     measure(5) {
@@ -45,12 +46,13 @@ fun main() {
  * ```
  * Total duration may vary depending on the hardware.
  * Ideally, the whole process should take 5000ms, but there always a tiny overhead due to how
- * coroutines are managed internally, plus the additional statements/expressions added.
+ * coroutines are managed internally by Kotlin, plus the additional statements/expressions added.
  */
 object MainTurboDSL {
     fun main() {
         TurboScope.execute<String> {
             async(
+                name = "async-3-jobs",
                 job1 =
                     asyncJob<Int>(name = "job1") {
                         // Simulate a long-running task that will calculate some Int value
