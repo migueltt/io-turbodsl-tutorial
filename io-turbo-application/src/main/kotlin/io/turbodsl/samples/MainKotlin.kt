@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+package io.turbodsl.samples
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -96,9 +98,9 @@ object MainKotlin {
                     printTest("finish job3")
                     return@async true
                 }
-            // At this point, both job1 and job2 are started an executed
+            // At this point, job1, job2, and job3 are started
             printTest("awaiting results")
-            // Wait for both results concurrently (non-blocking)
+            // Wait for all results
             val value1 = job1.await()
             printTest("job1 results ready")
             val value2 = job2.await()

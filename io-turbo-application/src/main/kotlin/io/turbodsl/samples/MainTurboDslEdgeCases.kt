@@ -14,45 +14,61 @@
  * limitations under the License.
  */
 
-import io.turbodsl.core.TurboScope
-import io.turbodsl.core.logging.LoggerProvider
-import kotlinx.coroutines.delay
+package io.turbodsl.samples
 
-/** Run [MainTurboDSL.main] 5 times. */
+import io.turbodsl.core.TurboScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+
 fun main() {
-    // Enable internal logging to see what's going on
-    System.setProperty(LoggerProvider.PROPERTY_LOGGING_LEVEL, "off")
-    System.setProperty(LoggerProvider.PROPERTY_LOGGING_INTERNAL, "true")
     measure(5) {
-        MainTurboDSL.main()
+        MainTurboDslEdgeCases.main()
     }
 }
 
-/** Example using `TurboDSL`:
+/** Example using `io.turbodsl`:
  * - Execute 3 jobs (job1, job2, job3) in parallel
  * - Execute a final job (job4) that will process the results of all previous 3
  *
- * This implementation achieves the same as [MainKotlin.main], but uses `TurboDSL` expressions.
+ * This implementation adds
+ *
+ * But, the problem arises when considering edge-cases:
+ * - What happens if one of the first 3 jobs fails?
+ *   - Should we cancel everything?
+ *   - Should we continue using only the jobs that were successful?
+ *   - Is there a default-value in case of failures?
+ *   - Should we retry the failing job?
+ * - Since we do not want to wait forever, a timeout limit should be set.
+ *   - It may be that job1 is calling an API-endpoint or reading a file - IO operations are expensive.
+ *   - Should a timeout limit imposed on each job?
+ *   - Or, should a total timeout limit imposed on all 3 jobs total execution time?
+ *   - The same questions as before: what happens if one of the jobs fails?
+ *
+ * Yes, it is possible to make changes on the code below, but it will get more complex:
+ * - What if you need to add one more job due to new requirements?
+ * - What if based on business requirements you must ensure that the processing takes place no longer than 5 seconds?
+ *
+ * There could be several new requirements in the future, and applying changes will become more complex over time.
+ *
+ * Using the standard coroutine library Kotlin provides:
+ * - [runBlocking]
+ * - [async]
+ * - [kotlinx.coroutines.Deferred.await]
  *
  * Running this 5 times:
  * ```
- *                 No-log  With-log
- *                 ======= ========
- * Iteration: 1 -> 5079ms    5110ms  // first always have more overhead due to JVM initialization
- * Iteration: 2 -> 5008ms    5010ms
- * Iteration: 3 -> 5009ms    5007ms
- * Iteration: 4 -> 5008ms    5008ms
- * Iteration: 5 -> 5006ms    5009ms
+ * Iteration: 1 -> 5077ms
+ * Iteration: 2 -> 5011ms
+ * Iteration: 3 -> 5010ms
+ * Iteration: 4 -> 5012ms
+ * Iteration: 5 -> 5007ms
  * ```
- * Total duration may vary depending on the hardware.
- * Ideally, the whole process should take 5000ms, but there always a tiny overhead due to how
- * coroutines are managed internally by Kotlin, plus the additional statements/expressions added.
  */
-object MainTurboDSL {
+object MainTurboDslEdgeCases {
     fun main() {
         TurboScope.execute<String> {
             async(
-                name = "async-3-jobs",
                 job1 =
                     asyncJob<Int>(name = "job1") {
                         // Simulate a long-running task that will calculate some Int value
@@ -78,13 +94,8 @@ object MainTurboDSL {
                         true
                     },
             ) { ok, r1, r2, r3 ->
-                job<Int> {
-                    9
-                } +
-                    job<Int> { 10 }
-
-                job(name = "job4", context = this) {
-                    with(context) {
+                job(name = "job4", input = this) {
+                    with(input) {
                         if (ok) {
                             val job1 = r1.success()
                             val job2 = r2.success()

@@ -15,7 +15,7 @@
  */
 
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.0.21"
     id("com.diffplug.spotless") version "6.25.0"
     application
 }
@@ -26,7 +26,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     // This will use ~/.m2 local maven repository
     mavenLocal()
-    /*
+    /* When using GitHubPackages, uncomment this section.
     maven {
         name = "GitHubPackages"
         url = uri("https://maven.pkg.github.com/migueltt/io-turbodsl")
@@ -35,16 +35,15 @@ repositories {
             username = "<username>"
             // See https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
             // password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-            password = "<token>"
+            password = "<password>"
         }
     }
-    */
+     */
     mavenCentral()
 }
 
 dependencies {
-    implementation("io.turbodsl:io-turbodsl-core:+")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+    implementation("io.turbodsl:io-turbodsl-core:1.2.4")
     testImplementation(kotlin("test"))
 }
 
@@ -53,11 +52,7 @@ tasks.test {
 }
 
 kotlin {
-    jvmToolchain(21)
-}
-
-application {
-    mainClass.set("MainKt")
+    jvmToolchain(22)
 }
 
 spotless {

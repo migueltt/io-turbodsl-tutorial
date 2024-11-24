@@ -11,7 +11,7 @@
 ```
 > A _DSL-engine_ to **turbo-charge** your Kotlin development.
 
-> `TurboDSL` will not make your application faster, but will make your development easier,
+> `io.turbodsl` will not make your application faster, but will make your development easier,
 > and most importantly, write asynchronous code in a natural way using DSL expressions.
 
 # Tutorials in this repository
